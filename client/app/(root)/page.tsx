@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';  
 import { getUserId, removeToken } from '@/utils/auth';
-import Navbar from '@/components/Navbar'; // Importing the Navbar component
+import Navbar from '@/components/Navbar';
+import ExportCsv from '@/app/(root)/exportCsv/page';  // Import the ExportCsv component
 
 type Task = {
   task_id: string;
@@ -21,7 +22,6 @@ const TasksPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const router = useRouter();
   const userId = getUserId();
-  console.log(userId);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -34,13 +34,13 @@ const TasksPage = () => {
         }
 
         setTasks(data);
-        setFilteredTasks(data); 
+        setFilteredTasks(data);
       } catch (error) {
         console.error('Error fetching tasks:', error);
       }
     };
 
-    fetchTasks(); 
+    fetchTasks();
   }, [userId]);
 
   useEffect(() => {
@@ -61,14 +61,13 @@ const TasksPage = () => {
 
   const formatDate = (dateString?: string): string => {
     if (!dateString) return '';
-    
+
     const date = new Date(dateString);
     return date.toLocaleDateString();
   };
 
   return (
     <div className="container mx-auto p-4">
-      
       
       <input
         type="text"
@@ -78,12 +77,27 @@ const TasksPage = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
 
-      <button 
-        onClick={handleCreateTask}
-        className="bg-blue-500 text-white p-2 rounded-md mb-4"
-      >
-        Create Task
-      </button>
+      <div className="flex justify-start mb-4">
+        <button 
+          onClick={handleCreateTask}
+          className="bg-blue-500 text-white p-2 rounded-md mr-4"
+        >
+          Create Task
+        </button>
+
+        <button
+          className='bg-yellow-500 text-white p-2 rounded-md mr-4'
+        >
+          <ExportCsv /> 
+        </button> 
+
+        <button
+          className='bg-green-500 text-white p-2 rounded-md mr-4'
+        >
+          Import CSV 
+        </button> 
+      </div>
+      
 
       <table className="min-w-full border-collapse border-4 border-gray-700 shadow-2xl rounded-2xl">
         <thead className='bg-sky-200'>
