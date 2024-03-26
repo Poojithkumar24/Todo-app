@@ -22,9 +22,13 @@ CREATE TABLE "Task" (
     "status" TEXT NOT NULL DEFAULT 'OPEN',
     "start_date" TIMESTAMP(3),
     "end_date" TIMESTAMP(3),
+    "userId" TEXT NOT NULL,
 
     CONSTRAINT "Task_pkey" PRIMARY KEY ("task_id")
 );
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+
+-- AddForeignKey
+ALTER TABLE "Task" ADD CONSTRAINT "Task_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

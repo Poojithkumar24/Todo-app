@@ -1,8 +1,9 @@
-// pages/TasksPage.tsx
 'use client'
 
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { getUserId, removeToken } from '@/utils/auth';
+import Navbar from '@/components/Navbar'; // Importing the Navbar component
 
 type Task = {
   task_id: string;
@@ -18,20 +19,29 @@ const TasksPage = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const router = useRouter();
+  const userId = getUserId();
+  console.log(userId);
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/task');
-        setTasks(response.data);
-        setFilteredTasks(response.data);
+        const response = await fetch(`http://localhost:4000/api/task/`);
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        setTasks(data);
+        setFilteredTasks(data); 
       } catch (error) {
         console.error('Error fetching tasks:', error);
       }
     };
 
-    fetchTasks();
-  }, []);
+    fetchTasks(); 
+  }, [userId]);
 
   useEffect(() => {
     const filtered = tasks.filter(task =>
@@ -40,17 +50,40 @@ const TasksPage = () => {
     setFilteredTasks(filtered);
   }, [searchTerm, tasks]);
 
+  const handleLogout = () => {
+    removeToken();
+    router.push('/login');
+  };
+
+  const handleCreateTask = () => {
+    router.push('/createtask');
+  };
+
+  const formatDate = (dateString?: string): string => {
+    if (!dateString) return '';
+    
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  };
+
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl mb-4">Tasks</h1>
-
+      
+      
       <input
         type="text"
         placeholder="Search by task name"
-        className="border-4 border-black p-2 mb-8 w-full rounded-2xl "
+        className="border-4 border-black p-2 mb-8 w-full rounded-2xl"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
+
+      <button 
+        onClick={handleCreateTask}
+        className="bg-blue-500 text-white p-2 rounded-md mb-4"
+      >
+        Create Task
+      </button>
 
       <table className="min-w-full border-collapse border-4 border-gray-700 shadow-2xl rounded-2xl">
         <thead className='bg-sky-200'>
@@ -70,8 +103,8 @@ const TasksPage = () => {
               <td className="border p-2">{task.description}</td>
               <td className="border p-2">{task.priority}</td>
               <td className="border p-2">{task.status}</td>
-              <td className="border p-2">{task.start_date}</td>
-              <td className="border p-2">{task.end_date}</td>
+              <td className="border p-2">{formatDate(task.start_date)}</td>
+              <td className="border p-2">{formatDate(task.end_date)}</td>
             </tr>
           ))}
         </tbody>

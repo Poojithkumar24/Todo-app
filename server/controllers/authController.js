@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { PrismaClient } = require('@prisma/client');
+const { response } = require('express');
 
 const prisma = new PrismaClient();
 
@@ -51,9 +52,15 @@ exports.register = async (req, res) => {
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
-
+    const userExists = await prisma.user.findUnique({
+        where:{username:username}
+    });
+    console.log(userExists);
+    if(userExists) return console.error('user already exists')
+    
     try {
         // Create a new user with hashed password
+        
         const newUser = await prisma.user.create({
             data: {
                 username: username,
