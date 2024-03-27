@@ -5,10 +5,6 @@ const prisma = new PrismaClient();
 
 
 // add a task
-
-
-
-// add a task
 const addTask = async (req, res) => {
   const { task_name, description, priority, status, start_date, end_date, userId } = req.body;
   
@@ -36,7 +32,7 @@ const addTask = async (req, res) => {
 // update a task
 const updateTask = async (req, res) => {
   const { TASK_ID } = req.params;
-  const { start_date, end_date } = req.body; // Get start_date and end_date from request body
+  const { start_date, end_date } = req.body; 
   const updatedData = {
     ...req.body,
         start_date: new Date(start_date), 
