@@ -72,7 +72,7 @@ export default function Signup() {
           </button>
 
           <div className="mt-4 text-center">
-          <Link href="/" className='text-sm text-slate-600 underline'>
+          <Link href="/login" className='text-sm text-slate-600 underline'>
             Already have an account?
           </Link>
         </div>
