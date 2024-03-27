@@ -7,6 +7,9 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { isAuthenticated, removeToken, getUser } from '@/utils/auth';
 
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+
 type Task = {
   task_name: string;
   description: string;
@@ -51,9 +54,11 @@ const AddTaskPage = () => {
 
     try {
       await axios.post('http://localhost:4000/api/task', newTaskData);
-      router.push('/'); 
+      toast.success('Task added successfully!');
+      
     } catch (error) {
       console.error('Error adding task:', error);
+      toast.error('Failed to add task');
     }
   };
 
@@ -70,6 +75,7 @@ const AddTaskPage = () => {
 
   return (
     <div className="container mx-auto p-4 bg-gray-100 min-h-screen">
+      <ToastContainer />
       <h1 className="text-2xl mb-8 text-center font-bold text-blue-600">Add New Task</h1>
 
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md">

@@ -36,11 +36,11 @@ exports.login = async (req, res) => {
             },
             process.env.JWT_SECRET,
             {
-                expiresIn: '1d',
+                expiresIn: '2d',
             }
         );
 
-        res.json({ token });
+        res.json({ token,userId:user.id });
     } catch (error) {
         console.error('Error logging in:', error);
         res.status(500).json({ message: 'Failed to login' });

@@ -30,6 +30,7 @@ export default function Login() {
       
       
       const { token, userId } = response.data;
+      console.log(userId)
   
       setToken(token, userId); 
       router.push('/');

@@ -1,8 +1,8 @@
-// ImportCsv.tsx
 'use client'
 
 import React, { useState } from 'react';
 import Papa from 'papaparse';
+import axios from 'axios';
 
 type Task = {
   task_name: string;
@@ -53,15 +53,9 @@ const ImportCsv = () => {
 
   const submitData = async (data: Task[]) => {
     try {
-      const response = await fetch('http://localhost:4000/api/task/bulk_add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await axios.post('http://localhost:4000/api/task/bulk_add', data);
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         throw new Error('Failed to submit data');
       }
     } catch (error) {
