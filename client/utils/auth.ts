@@ -8,7 +8,7 @@ type User = {
 export const setToken = (token: string, userId: string): void => {
   // Combine token and userId as a single string and set it as a cookie
   const userToken = `${token}.${userId}`;
-  Cookies.set('userToken', userToken, { expires: 1 }); // Set cookie to expire in 1 day
+  Cookies.set('userToken', userToken, { expires: 2}); // Set cookie to expire in 1 day
 };
 
 export const getToken = (): string | undefined => {
