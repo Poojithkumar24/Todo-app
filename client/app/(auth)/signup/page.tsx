@@ -1,10 +1,11 @@
-// pages/signup.tsx
+
 
 'use client'
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import Link from 'next/link'
 
 export default function Signup() {
   const router = useRouter();
@@ -30,7 +31,7 @@ export default function Signup() {
       router.push('/login');
     } catch (error: any) {
       console.error('Signup Error:', error.message);
-      // Handle signup error (e.g., display error message)
+      
     }
   };
 
@@ -69,6 +70,12 @@ export default function Signup() {
           <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded-md">
             Sign Up
           </button>
+
+          <div className="mt-4 text-center">
+          <Link href="/" className='text-sm text-slate-600 underline'>
+            Already have an account?
+          </Link>
+        </div>
         </form>
       </div>
     </div>

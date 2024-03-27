@@ -1,9 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation'; // Corrected import
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { isAuthenticated, setToken } from '@/utils/auth';
+import Link from 'next/link'; 
 
 export default function Login() {
   const router = useRouter();
@@ -13,34 +14,31 @@ export default function Login() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    // Check if the user is already authenticated
+    
     if (isAuthenticated()) {
       router.push('/');
     }
   }, []);
 
-  // Update this part of your login page
-const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setError('');
-  
+
     try {
       const response = await axios.post('http://localhost:4000/api/auth/login', { username, password });
       
-      // Assuming your response has both token and userId
+      
       const { token, userId } = response.data;
   
-      setToken(token, userId); // Update this line
-  
+      setToken(token, userId); 
       router.push('/');
-    } catch (error:any) {
-      // ... existing code
+    } catch (error) {
+      setError('Invalid credentials. Please try again.');
     } finally {
       setLoading(false);
     }
   };
-  
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-200">
@@ -70,6 +68,13 @@ const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
+        
+        
+        <div className="mt-4 text-center">
+          <Link href="/signup" className='text-sm text-slate-600 underline'>
+            Dont have an account?
+          </Link>
+        </div>
       </div>
     </div>
   );

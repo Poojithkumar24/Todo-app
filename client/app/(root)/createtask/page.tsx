@@ -2,7 +2,7 @@
 'use client'
 
 
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { isAuthenticated, removeToken, getUser } from '@/utils/auth';
@@ -61,6 +61,12 @@ const AddTaskPage = () => {
     e.preventDefault();
     addTask();
   };
+
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      router.push('/login');
+    }
+  })
 
   return (
     <div className="container mx-auto p-4 bg-gray-100 min-h-screen">

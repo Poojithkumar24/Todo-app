@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';  
 import { getUserId, removeToken } from '@/utils/auth';
 import Navbar from '@/components/Navbar';
-import ExportCsv from '@/app/(root)/exportCsv/page';  // Import the ExportCsv component
+import ExportCsv from '@/app/(root)/exportCsv/page';  
+import { isAuthenticated } from '@/utils/auth';
 
 type Task = {
   task_id: string;
@@ -20,10 +21,18 @@ const TasksPage = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const router = useRouter();
+  
   const userId = getUserId();
 
+  const router = useRouter();
+
+  
+
   useEffect(() => {
+    if (!isAuthenticated()) {
+      router.push('/login');
+    }
+    
     const fetchTasks = async () => {
       try {
         const response = await fetch(`http://localhost:4000/api/task/`);
