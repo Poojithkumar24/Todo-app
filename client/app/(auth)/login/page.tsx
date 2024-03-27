@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import { isAuthenticated, setToken } from '@/utils/auth';
 import Link from 'next/link'; 
+
+
 
 export default function Login() {
   const router = useRouter();
@@ -13,12 +14,6 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    
-    if (isAuthenticated()) {
-      router.push('/');
-    }
-  }, []);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,8 +27,7 @@ export default function Login() {
       const { token, userId } = response.data;
       console.log(userId)
   
-      setToken(token, userId); 
-      router.push('/');
+      router.push('/tasks');
     } catch (error) {
       setError('Invalid credentials. Please try again.');
     } finally {

@@ -2,8 +2,6 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 
-
-
 // add a task
 const addTask = async (req, res) => {
   const { task_name, description, priority, status, start_date, end_date, userId } = req.body;
@@ -113,7 +111,7 @@ const getTaskById = async (req, res) => {
 //delete a task
 
 const deleteTask = async (req, res) => {
-  console.log("Delete task function called"); // Debugging line
+  console.log("Delete task function called"); 
   const { TASK_ID } = req.params;
   
   try {

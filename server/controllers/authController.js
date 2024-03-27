@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { PrismaClient } = require('@prisma/client');
-const { response } = require('express');
 
 const prisma = new PrismaClient();
 
@@ -9,14 +8,14 @@ exports.login = async (req, res) => {
     const { username, password } = req.body;
 
     try {
-        // Find user by username
+        
         const user = await prisma.user.findUnique({
             where: {
                 username: username,
             },
         });
 
-        // Check if user exists
+        
         if (!user) {
             return res.status(400).json({ message: 'Invalid credentials no user' });
         }
@@ -50,7 +49,7 @@ exports.login = async (req, res) => {
 exports.register = async (req, res) => {
     const { username, password } = req.body;
 
-    // Hash the password
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     const userExists = await prisma.user.findUnique({
         where:{username:username}
