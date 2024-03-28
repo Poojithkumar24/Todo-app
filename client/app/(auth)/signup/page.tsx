@@ -9,8 +9,10 @@ import Link from 'next/link'
 
 export default function Signup() {
   const router = useRouter();
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const[profilepic,setProfilepic] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -23,8 +25,10 @@ export default function Signup() {
 
     try {
       const response = await axios.post('http://localhost:4000/api/auth/register', {
-        username,
+        name,
+        email,
         password,
+        profilepic
       });
 
       console.log('Signup successful:', response.data);
@@ -40,12 +44,21 @@ export default function Signup() {
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 className="text-2xl mb-4">Sign Up</h1>
         <form onSubmit={handleSignup} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-600">Username:</label>
+        <div>
+            <label className="block text-sm font-medium text-gray-600">Name:</label>
             <input
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full p-2 border rounded-md"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-600">Email:</label>
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full p-2 border rounded-md"
             />
           </div>
@@ -64,6 +77,15 @@ export default function Signup() {
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full p-2 border rounded-md"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-600">Profile Pic</label>
+            <input
+              type="text"
+              value={profilepic}
+              onChange={(e) => setProfilepic(e.target.value)}
               className="w-full p-2 border rounded-md"
             />
           </div>

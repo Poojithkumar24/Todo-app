@@ -2,13 +2,10 @@ const express = require('express')
 const app = express()
 const authRoutes = require('./routes/authRoutes');
 const taskRoutes = require('./routes/taskRoutes')
-const dotenv = require('dotenv').config();
+require('dotenv').config();
 const cors = require('cors');
 
-
-
 app.use(cors());
-
 
 app.use(express.json())
 app.use((req, res, next) => {

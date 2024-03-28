@@ -1,21 +1,20 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { PrismaClient } = require('@prisma/client');
-
+const {isEmail} = require('validator')
 const prisma = new PrismaClient();
 
 exports.login = async (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     try {
         
         const user = await prisma.user.findUnique({
             where: {
-                username: username,
+                email: email,
             },
         });
-
-        
+ 
         if (!user) {
             return res.status(400).json({ message: 'Invalid credentials no user' });
         }
@@ -24,14 +23,14 @@ exports.login = async (req, res) => {
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {
-            return res.status(400).json({ message: 'Invalid credentials no password' });
+            return res.status(400).json({ message: 'Invalid credentials password incorrect' });
         }
 
         // Generate JWT token
         const token = jwt.sign(
             {
                 userId: user.id,
-                userName: user.username,
+                email: user.email,
             },
             process.env.JWT_SECRET,
             {
@@ -47,23 +46,18 @@ exports.login = async (req, res) => {
 };
 
 exports.register = async (req, res) => {
-    const { username, password } = req.body;
+    const { name,email, password,profilepic} = req.body;
 
-    
     const hashedPassword = await bcrypt.hash(password, 10);
-    const userExists = await prisma.user.findUnique({
-        where:{username:username}
-    });
-    console.log(userExists);
-    if(userExists) return console.error('user already exists')
     
     try {
-        // Create a new user with hashed password
         
         const newUser = await prisma.user.create({
             data: {
-                username: username,
-                password: hashedPassword
+                name:name,
+                email: email,
+                password: hashedPassword,
+                profilepic:profilepic
             },
         });
 

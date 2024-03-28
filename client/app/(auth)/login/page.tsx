@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 export default function Login() {
   const router = useRouter();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -21,7 +21,7 @@ export default function Login() {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:4000/api/auth/login', { username, password });
+      const response = await axios.post('http://localhost:4000/api/auth/login', { email, password });
       
       
       const { token, userId } = response.data;
@@ -42,11 +42,11 @@ export default function Login() {
         {error && <div className="text-red-500 mb-4">{error}</div>}
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-600">Username:</label>
+            <label className="block text-sm font-medium text-gray-600">Email:</label>
             <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full p-2 border rounded-md"
             />
           </div>

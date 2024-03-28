@@ -12,32 +12,34 @@ datasource db {
 
 model User {
   id        String    @id @default(uuid())
-  username  String    @unique
+  email     String    @unique
   password  String
-  
+  name      String
+  profilepic String
 }
 
 model Task {
   task_id     String    @id @default(uuid())
   task_name   String
   description String
-  priority    String    @default("MEDIUM")
-  status      String    @default("OPEN")
+  priority    Priority  
+  status      Status  
   start_date  DateTime?
   end_date    DateTime?
-  userId      String
-  
+  userId      String 
 }
 
-enum Priority {
+enum Priority{
   HIGHEST
   HIGH
   MEDIUM
   LOW
 }
 
-enum Status {
+enum Status{
   OPEN
   IN_PROGRESS
-  COMPLETED
+  CLOSED
 }
+
+
