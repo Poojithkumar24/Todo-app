@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import Link from 'next/link'; 
-
-
+import{baseURL} from "@/utils/constant"
+import { toast } from 'react-toastify';
+import {setAuthentication, setUserId} from "@/utils/auth"
 
 export default function Login() {
   const router = useRouter();
@@ -20,14 +21,21 @@ export default function Login() {
     setLoading(true);
     setError('');
 
+    const payload={
+      email,
+      password
+    }
+
     try {
-      const response = await axios.post('http://localhost:4000/api/auth/login', { email, password });
+      const response = await axios.post(`${baseURL}/auth/login`,payload).then((res)=>{
+        setAuthentication(res.data.token);
+        setUserId(res.data.userId);
+        toast.success(
+          <div>Logged in Successfully</div>
+        )
+      });
       
-      
-      const { token, userId } = response.data;
-      console.log(userId)
-  
-      router.push('/tasks');
+      router.push('/');
     } catch (error) {
       setError('Invalid credentials. Please try again.');
     } finally {

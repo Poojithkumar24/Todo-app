@@ -63,7 +63,7 @@ const CreateTask = () => {
 
   return (
     <div className="container mx-auto p-4 bg-gray-100 min-h-screen">
-      <ToastContainer />
+
       <h1 className="text-2xl mb-8 text-center font-bold text-blue-600">Add New Task</h1>
 
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md">

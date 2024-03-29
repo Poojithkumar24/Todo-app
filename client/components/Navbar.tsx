@@ -1,12 +1,17 @@
 'use client'
 
 import { useRouter } from 'next/navigation';
+import {logOut} from "@/utils/auth";
+import { toast } from 'react-toastify';
+
 
 const Navbar = () => {
   const router = useRouter();
 
-  const handleLogout = () => {
-    router.push('/login');
+  const handleLogOut = () => {
+    logOut();
+    toast.success("Logout Successfully");
+    router.push("/login");
   };
 
   return (
@@ -14,7 +19,7 @@ const Navbar = () => {
       <h1 className="text-3xl font-semibold text-white">TODO APP</h1>
       <div className="space-x-4">
         <button
-          onClick={handleLogout}
+          onClick={handleLogOut}
           className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md shadow-md transition duration-300 ease-in-out"
         >
           Logout

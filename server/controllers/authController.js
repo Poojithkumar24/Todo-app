@@ -1,8 +1,9 @@
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const { PrismaClient } = require('@prisma/client');
 const {isEmail} = require('validator')
 const prisma = new PrismaClient();
+const jwt = require('jsonwebtoken');
+
 
 exports.login = async (req, res) => {
     const { email, password } = req.body;
@@ -19,7 +20,6 @@ exports.login = async (req, res) => {
             return res.status(400).json({ message: 'Invalid credentials no user' });
         }
 
-        // Compare passwords
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {
@@ -34,10 +34,11 @@ exports.login = async (req, res) => {
             },
             process.env.JWT_SECRET,
             {
-                expiresIn: '2d',
+                expiresIn: '1d',
             }
         );
 
+        console.log(user.id)
         res.json({ token,userId:user.id });
     } catch (error) {
         console.error('Error logging in:', error);
@@ -67,3 +68,32 @@ exports.register = async (req, res) => {
         res.status(500).json({ message: 'Failed to register user' });
     }
 };
+
+
+//verifyToken
+
+exports.verifyToken=(req,res)=>{
+    const {token} = req.body;
+
+    if(token){
+        try{
+            const decode = jwt.verify(token,process.env.JWT_SECRET);
+
+            res.json({
+                auth:true,
+                data:decode,
+            });
+        }catch(error){
+            res.json({
+                auth:false,
+                data: error.message,
+            })
+        }
+    }
+    else{
+        res.json({
+            auth:false,
+            data:"No token found in request"
+        });
+    }
+}
