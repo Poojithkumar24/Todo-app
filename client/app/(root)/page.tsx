@@ -4,26 +4,32 @@ import { isLogin} from "@/utils/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { userId } from "@/utils/auth";
+import {getUserId} from '@/utils/auth'
+import { get } from "http";
 export default function Home() {
   const router = useRouter();
   const [user, setUser] = useState({ email: "" });
   const [pageReady, setPageReady] = useState(false);
 
+  const userId = getUserId()
+
   useEffect(() => {
     const authenticate = async () => {
       const loggedIn = await isLogin();
 
-      if (loggedIn.auth) {
+      if (!loggedIn.auth) {
+        router.push("/login");
+      } else {
+        
         setUser(loggedIn.data);
         setPageReady(true);
-      } else {
-        router.push("/login");
       }
     };
 
     authenticate();
   }, []);
+
+  
 
  
 

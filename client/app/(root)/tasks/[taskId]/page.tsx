@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { Button } from '@/components/ui/button';
+import { isLogin } from '@/utils/auth';
 
 type Task = {
   task_name: string;
@@ -26,10 +27,23 @@ const EditTaskPage = () => {
   const router = useRouter()
 
   useEffect(() => {
+    const authenticate = async () => {
+      const loggedIn = await isLogin();
+
+      if (!loggedIn.auth) {
+        router.push("/login");
+      }
+    };
+
+    authenticate();
+  }, []);
+
+  useEffect(() => {
     if (taskId) {
       fetchTaskById(taskId);
     }
   }, [taskId]);
+  
 
   const fetchTaskById = async (taskId:any) => {
     try {

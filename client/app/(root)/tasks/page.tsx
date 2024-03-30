@@ -6,10 +6,12 @@ import { DataTable } from "../_components/data-table";
 import ExportCsv from "@/components/ExportCsv"
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Ghost } from 'lucide-react';
+import { getUserId, isLogin } from '@/utils/auth';
+import { useRouter } from 'next/navigation';
 
 async function getData(): Promise<Task[]> {
-  const response = await fetch(`http://localhost:4000/api/task/`);
+  const userId = getUserId();
+  const response = await fetch(`http://localhost:4000/api/task/user-tasks/${userId}`);
   const data = await response.json(); 
 
   return data;
@@ -17,15 +19,20 @@ async function getData(): Promise<Task[]> {
 
 export default function DemoPage() {
   const [data, setData] = useState<Task[]>([]);
-
+  const router  = useRouter()
   useEffect(() => {
     const fetchData = async () => {
+      const loggedIn = await isLogin();
+      if (!loggedIn.auth) {
+        router.push("/login");
+      }
       const fetchedData = await getData();
       setData(fetchedData);
     };
 
     fetchData();
   }, []); 
+  
 
   return (
     <div>

@@ -1,7 +1,7 @@
 import cookie from "js-cookie";
 import axios from "axios";
 import { baseURL } from "./constant";
-export var userId=null;
+
 export const setCookie = (key, value) => {
   cookie.set(key, value, { expires: 1 });
 };
@@ -18,12 +18,17 @@ export const setAuthentication = (token) => {
   setCookie("token", token);
 };
 
-export const setUserId = (id) =>{
-  userId=id;
-}
+export const setUserId = (id) => {
+  setCookie("userId", id); // Set userId in cookie
+};
+
+export const getUserId = () => {
+  return getCookie("userId"); // Get userId from cookie
+};
 
 export const logOut = () => {
   removeCookie("token");
+  removeCookie("userId"); // Remove userId cookie on logout
 };
 
 export const isLogin = async () => {

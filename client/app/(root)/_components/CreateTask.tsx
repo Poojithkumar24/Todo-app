@@ -4,9 +4,9 @@
 import { useState,useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
+import { getUserId, isLogin } from '@/utils/auth';
 
 type Task = {
   task_name: string;
@@ -15,10 +15,15 @@ type Task = {
   status: string;
   start_date: string;
   end_date: string;
-  userId: string;
+  userId: any;
 };
 
 const CreateTask = () => {
+
+  const router = useRouter();
+
+ 
+  const userId = getUserId();
   const [taskData, setTaskData] = useState<Task>({
     task_name: '',
     description: '',
@@ -26,8 +31,10 @@ const CreateTask = () => {
     status: '',
     start_date: '',
     end_date: '',
-    userId: '',
+    userId:'',
   });
+
+  
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -42,6 +49,8 @@ const CreateTask = () => {
 
     const newTaskData: Task = {
       ...taskData,
+      userId
+     
     };
 
     try {
