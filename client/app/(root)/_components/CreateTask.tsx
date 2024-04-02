@@ -107,6 +107,7 @@ const CreateTask = () => {
             onChange={handleInputChange}
             className="border p-2 w-full rounded-md"
           >
+            <option value="Priority">Select Priority</option>
             <option value="HIGHEST">HIGHEST</option>
             <option value="HIGH">HIGH</option>
             <option value="MEDIUM">MEDIUM</option>
@@ -122,6 +123,7 @@ const CreateTask = () => {
             onChange={handleInputChange}
             className="border p-2 w-full rounded-md"
           >
+            <option value="Status">SELECT STATUS</option>
             <option value="OPEN">OPEN</option>
             <option value="IN_PROGRESS">IN PROGRESS</option>
             <option value="COMPLETED">COMPLETED</option>

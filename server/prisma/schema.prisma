@@ -15,7 +15,7 @@ model User {
   email     String    @unique
   password  String
   name      String
-  profilepic String
+  profilepic String?
 }
 
 model Task {

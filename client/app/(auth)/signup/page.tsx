@@ -12,7 +12,6 @@ export default function Signup() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const[profilepic,setProfilepic] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -27,8 +26,7 @@ export default function Signup() {
       const response = await axios.post('http://localhost:4000/api/auth/register', {
         name,
         email,
-        password,
-        profilepic
+        password, 
       });
 
       console.log('Signup successful:', response.data);
@@ -80,15 +78,7 @@ export default function Signup() {
               className="w-full p-2 border rounded-md"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-600">Profile Pic</label>
-            <input
-              type="text"
-              value={profilepic}
-              onChange={(e) => setProfilepic(e.target.value)}
-              className="w-full p-2 border rounded-md"
-            />
-          </div>
+          
           <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded-md">
             Sign Up
           </button>

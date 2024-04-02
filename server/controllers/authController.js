@@ -46,8 +46,10 @@ exports.login = async (req, res) => {
     }
 };
 
+
+
 exports.register = async (req, res) => {
-    const { name,email, password,profilepic} = req.body;
+    const { name,email,password} = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
     
@@ -57,8 +59,7 @@ exports.register = async (req, res) => {
             data: {
                 name:name,
                 email: email,
-                password: hashedPassword,
-                profilepic:profilepic
+                password: hashedPassword, 
             },
         });
 
