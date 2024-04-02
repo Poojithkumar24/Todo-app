@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const { PrismaClient } = require('@prisma/client');
-const {isEmail} = require('validator')
+const {isEmail} = require('validator');
 const prisma = new PrismaClient();
 const jwt = require('jsonwebtoken');
 
@@ -49,7 +49,7 @@ exports.login = async (req, res) => {
 
 
 exports.register = async (req, res) => {
-    const { name,email,password} = req.body;
+    const { name,email,password, profilePic} = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
     
@@ -60,6 +60,7 @@ exports.register = async (req, res) => {
                 name:name,
                 email: email,
                 password: hashedPassword, 
+                profilepic:profilePic
             },
         });
 

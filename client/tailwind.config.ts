@@ -4,6 +4,16 @@ import { withUt } from "uploadthing/tw";
 
 export default withUt({
   darkMode: ["class"],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'utfs.io',
+        port: '3000',
+        pathname: '/utfs/**',
+      },
+    ],
+  },
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',

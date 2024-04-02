@@ -128,13 +128,15 @@ const deleteTask = async (req, res) => {
   }
 };
 
-// Inside taskController.js
+
+
+//user tasks
 const getUserTasks = async (req, res) => {
-  const { userId } = req.params; // Retrieve userId from the request parameters
+  const { userId } = req.params; 
   
   try {
     const tasks = await prisma.task.findMany({
-      where: { userId }, // Filter tasks by userId
+      where: { userId }, 
     });
 
     res.json(tasks);
