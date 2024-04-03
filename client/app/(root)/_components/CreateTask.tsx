@@ -55,8 +55,10 @@ const CreateTask = () => {
 
     try {
       await axios.post('http://localhost:4000/api/task', newTaskData);
-      toast.success('Task added successfully!');
-      
+      toast.success(
+        <div>Task added Sucessfully</div>   
+      );
+      router.push('/tasks');
     } catch (error) {
       console.error('Error adding task:', error);
       toast.error('Failed to add task');

@@ -1,6 +1,8 @@
 
 
 import Navbar from "@/components/Navbar";
+import { ToastContainer ,toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function RootLayout({
@@ -10,10 +12,11 @@ export default function RootLayout({
 }>) {
   return (
    
-      <div>
+      <div className="bg-gray-200">
         <div>
           <Navbar />
         </div>
+        <ToastContainer />
         {children}
       
       </div>

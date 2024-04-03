@@ -46,7 +46,7 @@ export default function Signup() {
 
   return (
     <div className="flex justify-center items-center h-screen w-full bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-3xl flex">
+      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-3xl flex">
 
         {/* Left Column */}
         <div className="flex-1 space-y-6 pr-8">

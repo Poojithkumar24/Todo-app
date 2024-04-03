@@ -42,7 +42,7 @@ const UserId = () => {
   };
 
   console.log('User image:', user); 
-  console.log(currentUserId===null,currentUserId, userId.userId);
+  
 
   return (
     <div>
@@ -52,6 +52,7 @@ const UserId = () => {
         <p>No profile picture available</p>
       )}
       {user?.name}
+      {user?.email}
     </div>
   );
 };
