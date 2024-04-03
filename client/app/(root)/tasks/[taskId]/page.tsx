@@ -24,7 +24,8 @@ const EditTaskPage = () => {
   const [task, setTask] = useState<Task | null>(null);
   const [formData, setFormData] = useState<Task | null>(null);
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
-  const router = useRouter()
+  const router = useRouter();
+  
 
   useEffect(() => {
     const authenticate = async () => {
