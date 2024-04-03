@@ -4,6 +4,7 @@ const cors = require('cors');
 const app = express()
 const authRoutes = require('./routes/authRoutes');
 const taskRoutes = require('./routes/taskRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 require('dotenv').config();
 
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/task',taskRoutes);
+app.use('/api/user',userRoutes);
 
 app.listen(process.env.PORT,()=>{
     console.log(`server connected to port ${process.env.PORT}`)
