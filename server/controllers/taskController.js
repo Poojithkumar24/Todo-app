@@ -9,12 +9,12 @@ const addTask = async (req, res) => {
   try {
     const task = await prisma.task.create({
       data: {
-        task_name: task_name.trim(),
+        task_name: task_name,
         description: description.trim(),
         priority: priority.trim(),
         status: status.trim(),
-        start_date: new Date(start_date), 
-        end_date: new Date(end_date),     
+        start_date: new Date(start_date),
+        end_date: new Date(end_date),
         userId: userId, 
       },
     });
@@ -54,8 +54,6 @@ const updateTask = async (req, res) => {
 
 
 
-
-
 // add multiple tasks
 const bulkAddTasks = async (req, res) => {
   try{
@@ -73,9 +71,6 @@ const bulkAddTasks = async (req, res) => {
 //get all tasks
 
 const getAllTasks = async (req, res) => {
-  console.log('Received query parameters:', req.query);
-
-
   try {
     let tasks;
   
@@ -87,7 +82,6 @@ const getAllTasks = async (req, res) => {
     res.status(500).json({ message: "Failed to get tasks" });
   }
 };
-
 
 
 // get a particular task

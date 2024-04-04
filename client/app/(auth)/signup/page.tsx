@@ -109,7 +109,9 @@ export default function Signup() {
           </form>
         </div>
 
-        {/* Right Column */}
+        {/*  right column  */}
+
+        
         <div className="flex-1">
       <div className="mt-6 border rounded-md p-4">
         <div className="font-medium flex items-center justify-between mb-4">

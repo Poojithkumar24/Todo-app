@@ -3,12 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { Task, columns } from "../_components/columns";
 import { DataTable } from "../_components/data-table";
-import ExportCsv from "@/components/ExportCsv";
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { getUserId, isLogin } from '@/utils/auth';
 import { useRouter } from 'next/navigation';
-import {Search} from "lucide-react"
 
 async function getData(): Promise<Task[]> {
   const userId = getUserId();

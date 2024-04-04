@@ -19,16 +19,16 @@ export const setAuthentication = (token) => {
 };
 
 export const setUserId = (id) => {
-  setCookie("userId", id); // Set userId in cookie
+  setCookie("userId", id);
 };
 
 export const getUserId = () => {
-  return getCookie("userId"); // Get userId from cookie
+  return getCookie("userId"); 
 };
 
 export const logOut = () => {
   removeCookie("token");
-  removeCookie("userId"); // Remove userId cookie on logout
+  removeCookie("userId"); 
 };
 
 export const isLogin = async () => {
